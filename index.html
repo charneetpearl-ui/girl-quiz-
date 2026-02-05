@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Girl Essentials Test 💄</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg,#ffdde1,#ee9ca7);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5a0c2d;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 92%;
+  max-width: 520px;
+  background: rgba(255,255,255,0.85);
+  padding: 28px;
+  border-radius: 22px;
+  text-align: center;
+  transition: all 1s ease;
+  position: relative;
+  z-index: 2;
+}
+
+h1 { margin-bottom: 10px; }
+
+.progress {
+  height: 6px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.bar {
+  height: 100%;
+  width: 0%;
+  background: #ff4d6d;
+  transition: width .5s;
+}
+
+.question { font-size: 1.2rem; margin-bottom: 20px; }
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 30px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.quiz-btn { background:#fff; }
+.quiz-btn:hover { transform:scale(1.05); }
+
+.valentine {
+  background:
+  linear-gradient(rgba(255,154,158,0.85), rgba(250,208,196,0.85)),
+  url('us.jpg') center/cover no-repeat;
+  color:#5a0c2d;
+}
+
+.valentine h1 {
+  font-family:'Pacifico',cursive;
+  font-size:2.4rem;
+}
+
+.love-btn { background:#ff4d6d; color:white; }
+
+.heart { font-size:2rem; animation: float 2s infinite; }
+
+@keyframes float {
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+  100%{transform:translateY(0)}
+}
+
+/* heart photo cutouts */
+.heart-photo{
+  position:fixed;
+  width:70px;height:70px;
+  background:url('us.jpg') center/cover;
+  clip-path:path("M35 60 C35 60 0 35 0 20 C0 8 8 0 20 0 C28 0 35 8 35 14 C35 8 42 0 50 0 C62 0 70 8 70 20 C70 35 35 60 35 60 Z");
+  animation: float 3s infinite;
+  z-index:1;
+}
+
+/* confetti */
+.confetti{
+  position:fixed; top:-10px;
+  animation: fall 4s linear infinite;
+  z-index:0;
+}
+@keyframes fall{
+  to{transform:translateY(120vh) rotate(360deg);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="card">
+<h1 id="title">Girl Essentials Test 💅</h1>
+
+<div class="progress"><div class="bar" id="bar"></div></div>
+
+<div class="question" id="question">
+Pick your go-to bag type:
+</div>
+
+<div id="buttons">
+<button class="quiz-btn" onclick="nextQ()">Mini shoulder bag</button>
+<button class="quiz-btn" onclick="nextQ()">Tote</button>
+<button class="quiz-btn" onclick="nextQ()">Crossbody</button>
+</div>
+</div>
+
+<script>
+let step=0;
+const bar=document.getElementById("bar");
+const card=document.getElementById("card");
+const question=document.getElementById("question");
+const buttons=document.getElementById("buttons");
+const title=document.getElementById("title");
+
+function nextQ(){
+step++;
+bar.style.width=(step*12)+"%";
+
+if(step===1){
+question.innerText="Dream shoe category?";
+buttons.innerHTML=`
+<button class="quiz-btn" onclick="nextQ()">Heels 👠</button>
+<button class="quiz-btn" onclick="nextQ()">Sneakers 👟</button>
+<button class="quiz-btn" onclick="nextQ()">Boots 🖤</button>`;
+}
+
+else if(step===2){
+question.innerText="Pick a makeup must-have:";
+buttons.innerHTML=`
+<button class="quiz-btn" onclick="nextQ()">Lipstick 💄</button>
+<button class="quiz-btn" onclick="nextQ()">Mascara ✨</button>
+<button class="quiz-btn" onclick="nextQ()">Blush 🌸</button>`;
+}
+
+else if(step===3){
+question.innerText="What matters most?";
+buttons.innerHTML=`
+<button class="quiz-btn" onclick="nextQ()">Style</button>
+<button class="quiz-btn" onclick="nextQ()">Confidence</button>
+<button class="quiz-btn" onclick="nextQ()">Heart ❤️</button>`;
+}
+
+else if(step===4){
+card.classList.add("valentine");
+title.innerText="Okay… plot twist 💗";
+question.innerText="This wasn’t really a girl quiz.";
+
+buttons.innerHTML=`<button class="love-btn" onclick="nextQ()">I knew it 😌</button>`;
+}
+
+else if(step===5){
+question.innerText="You’re the prettiest part of my day.";
+buttons.innerHTML=`<button class="love-btn" onclick="nextQ()">Stoppp 🥺</button>`;
+}
+
+else if(step===6){
+question.innerHTML=`Will you be my Valentine? 💖`;
+buttons.innerHTML=`
+<button class="love-btn" onclick="nextQ()">Yes 💕</button>
+<button class="love-btn" onclick="nextQ()">Of course 💞</button>`;
+}
+
+else{
+question.innerText="You + Me = My favourite love story.";
+buttons.innerHTML=`<div class="heart">💘</div>`;
+hearts(); confetti();
+}
+}
+
+function hearts(){
+for(let i=0;i<6;i++){
+const h=document.createElement("div");
+h.className="heart-photo";
+h.style.left=Math.random()*80+"vw";
+h.style.top=Math.random()*70+"vh";
+document.body.appendChild(h);
+}
+}
+
+function confetti(){
+for(let i=0;i<30;i++){
+const c=document.createElement("div");
+c.className="confetti";
+c.innerText="💗";
+c.style.left=Math.random()*100+"vw";
+c.style.animationDuration=(Math.random()*2+3)+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),4000);
+}
+}
+</script>
+
+</body>
+</html>
